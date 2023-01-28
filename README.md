@@ -36,3 +36,4 @@ The forum service is mylittleforum version 2.3.4
 If we find database credential its most likely phpmyadmin credential
 
 ## Now search for entrypoint and then look for PrivEsc vector if needed to root the system
+Check readme of different method in the repo for different writeup
