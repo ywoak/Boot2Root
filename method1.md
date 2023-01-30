@@ -18,10 +18,19 @@ Her password is the same than her forum password
 Now we can connect as laurie on /webmail
 
 She has 2 mail, one containing db root access we can use on /phpmyadmin
+`user: root
+ pass: Fg'kKXBj87E:aJ$`
+Interesting to note that the sender email is `qudevide@mail.borntosec.net`
+and laurie sent the same email to `ft_root@mail.borntosec.net`
 
-Now we have access to the database 
+Now we have access to the database which gives us some software additional info:
+- Server: Localhost via UNIX socket
+- Server version: 5.5.44-0ubuntu0.12.04.1
+- Protocol version: 10
+- User: root@localhost
+- MySQL charset: UTF-8 Unicode (utf8)
 
-# Reverse shell
+## Reverse shell
 From native SQL QUERY we can create file
 The root dir of mysql on the system seems to be /var/lib/mysql/
 Except here it looks like we cant create a file anywhere on the system
@@ -46,7 +55,7 @@ When we sha256 it we get the ssh credentials for the laurie acc `330b845f3218574
 Now we're logged in as laurie, we see a 'bomb' software that is a 32 binary
 We can reverse it and solve the 6 steps then concatenate the result and we'll have the password for the thor acc
 
-# The bomb
+## The bomb
 When looking at the reversed code we see some strange stuff like the secret phase that we can activate on stage 4 by adding 'austinpowers'
 But it doesnt seem to do anything meaningful, likewise there is some intriguing function like send_mail but it doesnt look activated at all for now
 Back to solving each regular step of the bomb ->
@@ -92,13 +101,13 @@ We can verify this by just sending 123456 to check node value right before the l
 
 The final password for thor is `Publicspeakingisveryeasy.126241207201b2149opekmq426135`
 
-# Turtle
+## Turtle
 
 We have a series of instructions, when visualised with a python script (check script repo)
 We get a stylised "SLASH"
 When we md5 it we get the password for zaz user: `646da671ca01bb5d84dbb5fb2238dc8e`
 
-# Overflow binary
+## Overflow binary
 
 In zaz repo there is a binary that is vulnerable to a stack overflow 
 We can inject a shellcode in it which will get executed with a proper padding

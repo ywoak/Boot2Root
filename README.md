@@ -3,7 +3,7 @@
 We're given a vulnerable iso, and the end goal is to root it
 The mandatory part of the project specify we need 2 methods to do it, if we find more method they're considered bonuses
 
-We download the vulnerable iso, mout it on a fresh linux vm, launch the vm
+We download the vulnerable iso, mount it on a fresh linux vm, launch the vm
 There is no ip displayed in the vm attached to it 
 Lets first retrive the machine ip
 
