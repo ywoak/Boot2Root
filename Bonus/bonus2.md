@@ -1,21 +1,38 @@
-# Init overwrite in syslinux shell
+# SSH Username Enum attack
 
-To be fair from what i understood afterward this isnt supposed to be a legitimate method depending on who's asking
-Because the test box was made into an iso this wasnt protected but it wasnt an intended vulnerability at first
-However i believe that :
-1. For the sake of the readme to be complete
-4. Since its not like im reading or modifying the iso in itself
-2. Since it still thought me quite a bit
-3. Since i used something very similar on my personnal setup a few days ago when i locked myself out of my display manager and my wm
-i'll include it here
+On our openssh version (OpenSSH_5.9p1) there is a vulnerability that allow an attacker to perform an username enumeration attack
+Less flashy than a password vulnerability i'll admit
+The CVE assigned to this issue is CVE-2018-15473
+And its also an easier way to exploit openssh than the previous timing attacks used to perform username enumeration
 
-When the box is at its booting phase we can get into the boot prompt of syslinux (hold shift)
-(i think its the one we're using on this system) and instead of just booting from live (since its not a persistent setup)
-We can do it while specifying kernel parameter, one of them is init
-So just live init='/bin/bash' and instead of letting init be called by the kernel as its last setup stage
-and call /etc/rc.d/rcS.conf -> /etc/rc.d/rc.sysinit -> inittab -> getty
-We can just force it to launch a root shell (since system isnt mounted or anything with the overwrite)
-Its a 'rescue' technique that can be used by sysadmins when intended
+This is because of this bit of code ```
+  87 static int
+  88 userauth_pubkey(struct ssh *ssh)
+  89 {
+ ...
+ 101         if (!authctxt->valid) {
+ 102                 debug2("%s: disabled because of invalid user", __func__);
+ 103                 return 0;
+ 104         }
+ 105         if ((r = sshpkt_get_u8(ssh, &have_sig)) != 0 ||
+ 106             (r = sshpkt_get_cstring(ssh, &pkalg, NULL)) != 0 ||
+ 107             (r = sshpkt_get_string(ssh, &pkblob, &blen)) != 0)
+ 108                 fatal("%s: parse request failed: %s", __func__, ssh_err(r));```
 
-Ressource: my beloved arch-wiki of course
-bootloader page, syslinux/isolinux page, init page, kernel_parameter page
+As explained very clearly by the Qualys Security Advisory Team :
+ The attacker can try to authenticate a user with a malformed packet (for
+example, a truncated packet), and:
+
+- if the user is invalid (it does not exist), then userauth_pubkey()
+  returns immediately, and the server sends an SSH2_MSG_USERAUTH_FAILURE
+  to the attacker;
+
+- if the user is valid (it exists), then sshpkt_get_u8() fails, and the
+  server calls fatal() and closes its connection to the attacker.
+
+
+To run the exploit (which was publicly available, credit in the exploit file header)
+type `python CVE-2018-15473.py --port 22 --username {username/userlit to test} {boxip}`
+
+For example with zaz we get : zaz is a valid user!
+And with false we get : false is not a valid user!

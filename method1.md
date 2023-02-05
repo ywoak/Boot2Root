@@ -49,10 +49,26 @@ We can automate them in a script and recompile the C file or just
 `grep -R getme ft_fun -A 3`
 `grep -R return ft_fun -A 3` to sort them manually, there is only 12 char we need
 
-The result we get is : Iheartpwnage
-When we sha256 it we get the ssh credentials for the laurie acc `330b845f32185747e4f8ca15d40ca59796035c89ea809fb5d30f4da83ecf45a4`
+getme1() -> file 5/6 = I
+getme2() -> file 37/38 = h
+getme3() -> file 56/57 = e
+getme4() -> file 115/116 = a
+getme5() -> file 368/369 = r
+getme6() -> file 521/522 = t
+getme7() -> file 736/737 = p
+getme8() ->  'w'
+getme9() ->  'n'
+getme10() -> 'a'
+getme11() -> 'g'
+getme12() -> 'e'
 
-Now we're logged in as laurie, we see a 'bomb' software that is a 32 binary
+"ft_fun/BJPCP.pcap- printf("%c",getmeX());"
+"ft_fun/BJPCP.pcap- printf("Now SHA-256 it and submit");"
+
+final password = Iheartpwnage
+SHA-256 version = 330b845f32185747e4f8ca15d40ca59796035c89ea809fb5d30f4da83ecf45a4
+
+Now we're logged in as laurie, we see a 'bomb' software that is a 32bit binary
 We can reverse it and solve the 6 steps then concatenate the result and we'll have the password for the thor acc
 
 ## The bomb
@@ -112,7 +128,7 @@ When we md5 it we get the password for zaz user: `646da671ca01bb5d84dbb5fb2238dc
 In zaz repo there is a binary that is vulnerable to a stack overflow, through a call to strcpy
 The binary doesnt have the nx protection and it isnt enabled via kernel neither
 So we can inject a shellcode to exploit the vulnerable program
-Quick file info checking with `ls -l/getfacl ./exploit_me` `file `./exploit_me`
+Quick file info checking with `ls -l ./exploit_me` `file ./exploit_me`
 It is a setuid binary from root, so if we manage to spawn a shell properly it will be a root process
 
 The binary take one argument, that's where we place our shellcode. We try to find the address of

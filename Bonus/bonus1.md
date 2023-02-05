@@ -26,4 +26,9 @@ Here we replaced it with system() with "/bin/sh" argument, and the return addres
 Exit is just to make it clean because since we're not going to return after the system("/bin/sh")
 It might also prevent a sysadmin to notify a segfault in an imaginary world so why not
 
-./exploit_me $(python r2lc.py) -> `whoami/id` -> `root/0`
+./exploit_me $(python r2lc.py) -> `whoami` -> `root`
+
+By the way the shell we get with this is interactive but we're still under the ruid of zaz
+and only the euid of root, as its often the case with suid binary privEsc (`id` to verify that)
+To make it fully interactive as a native root process just add zaz to sudo group so you can sudo su
+Then passwd everything for easier post exploit manipulation
