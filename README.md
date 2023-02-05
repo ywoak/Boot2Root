@@ -9,7 +9,7 @@ Lets first retrive the machine ip
 
 ## DO NOT SPOIL YOURSELF
 If you are reading this as a 42-Student from anywhere in the world i'd heavily advise to close this page
-This project was very frustrating for me at the beginning but in the end i still learned a ton and getting stuck was definitely part of the process
+This project was very frustrating for me at first but in the end i still learned a ton and getting stuck was definitely part of the process
 If you keep reading you will get spoiled !
 
 ### Get vulnerable machine IP and scan for open ports
