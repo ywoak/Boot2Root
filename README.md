@@ -7,7 +7,12 @@ We download the vulnerable iso, mount it on a fresh linux vm, launch the vm
 There is no ip displayed in the vm attached to it 
 Lets first retrive the machine ip
 
-# Get vulnerable machine IP and scan for open ports
+## DO NOT SPOIL YOURSELF
+If you are reading this as a 42-Student from anywhere in the world i'd heavily advise to close this page
+This project was very frustrating for me at the beginning but in the end i still learned a ton and getting stuck was definitely part of the process
+If you keep reading you will get spoiled !
+
+### Get vulnerable machine IP and scan for open ports
 In the vm settings configure the network: we'll use bridge since its easy to setup
 Get host ip address with something like `ip a`, then scan our local network
 Then scan our network with `nmap -n -sV foundip-254`
@@ -23,7 +28,7 @@ PORT    STATE SERVICE
 443/tcp open  https
 993/tcp open  imaps
 
-# Scan webserver, get a broader picture of whats happening and where
+### Scan webserver, get a broader picture of whats happening and where
 imap and imaps are new to me, we'll use the ftp server and the ssh server for connection when we'll get credential
 For now lets see what webserver is running on port 80 & 443, lets open it in a browser
 Its a basic web page, lets scan the web content and try to get info on the system running
@@ -35,5 +40,12 @@ The webmail service is squirrelmail version 1.4.22
 The forum service is mylittleforum version 2.3.4
 If we find database credential its most likely phpmyadmin credential
 
-## Now search for entrypoint and then look for PrivEsc vector if needed to root the system
-Check readme of different method in the repo for different writeup
+### Now search for entrypoint and then look for PrivEsc vector to root the system
+Check different readme to have the rest of my writeups
+- method1.md
+- method2.md
+- bonus/bonus1.md
+- bonus/bonus2.md
+- bonus/bonus3.md
+- bonus/bonus4.md
+- bonus/bonus5.md
