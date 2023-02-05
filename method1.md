@@ -19,7 +19,7 @@ Now we can connect as laurie on /webmail
 
 She has 2 mail, one containing db root access we can use on /phpmyadmin
 `user: root
- pass: Fg'kKXBj87E:aJ$`
+ pass: Fg-'kKXBj87E:aJ$`
 Interesting to note that the sender email is `qudevide@mail.borntosec.net`
 and laurie sent the same email to `ft_root@mail.borntosec.net`
 
